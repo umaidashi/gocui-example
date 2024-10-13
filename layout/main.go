@@ -5,6 +5,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/jroimartin/gocui"
@@ -12,11 +13,15 @@ import (
 
 func layout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
+	menu := []string{"one", "two", "three"}
 	if v, err := g.SetView("side", 0, 0, int(0.2*float32(maxX)), maxY-6); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
 		v.Title = "Side"
+		for _, item := range menu {
+			fmt.Fprintln(v, item)
+		}
 	}
 	if v, err := g.SetView("main", int(0.2*float32(maxX))+1, 0, maxX, maxY-6); err != nil {
 		if err != gocui.ErrUnknownView {
